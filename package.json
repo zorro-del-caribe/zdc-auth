@@ -1,0 +1,40 @@
+{
+  "name": "zdc-auth",
+  "version": "1.0.0",
+  "description": "authentication server for zdc",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test npm run db:tables && NODE_ENV=test node ./test/index.js | tap-spec",
+    "start": "node index.js",
+    "db:tables": "node ./scripts/createTables.js",
+    "client:new": "node ./scripts/addClient.js"
+  },
+  "keywords": [
+    "zdc"
+  ],
+  "author": "Laurent Renard",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^4.3.0",
+    "app-root-path": "^1.3.0",
+    "basic-auth": "^1.0.4",
+    "conf-load": "^1.0.0",
+    "is-my-json-valid": "^2.13.1",
+    "koa": "^1.2.1",
+    "koa-json-schema": "^1.0.0",
+    "koa-pug": "^3.0.0-0",
+    "koa-router": "^5.4.0",
+    "moment": "^2.14.1",
+    "nodemailer": "^2.5.0",
+    "ship-hold": "^1.0.1",
+    "ship-hold-dao": "0.0.2",
+    "ship-hold-extension-loader": "^1.0.0",
+    "ship-hold-model-loader": "^1.0.0",
+    "ship-hold-uuids": "^1.0.0"
+  },
+  "devDependencies": {
+    "supertest": "^1.2.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  }
+}
