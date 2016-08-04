@@ -1,5 +1,11 @@
 html
     head
         title something went wrong
+        include ./headMeta
     body
-        p The application asking you to login does not comply with zdc security requirements. Use with caution and don't hesitate to contact our support.
+        include ./inlineStyle
+        main
+            p
+                | The application asking you to login does not comply with zdc security requirements. Use with caution and don't hesitate to contact #{'\n'}
+                a(href='#')   our support
+                | .

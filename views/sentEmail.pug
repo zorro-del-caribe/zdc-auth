@@ -1,5 +1,11 @@
 html
     head
         title Email confirmation
+        include ./headMeta
     body
-        p A magiclink has been sent to the email address #{email}. Click the magic link to login into zdc
+        include ./inlineStyle
+        main
+            p
+                | A magiclink has been sent to the email address
+                strong  #{email}
+                | . Click the magic link to login into zdc

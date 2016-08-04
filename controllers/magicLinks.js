@@ -41,11 +41,11 @@ exports.requestMagicLink = {
       this.throw(422, 'grant is Invalid');
     }
 
-    const [pendingLink] = yield [
+    const [[magicLink]] = yield [
       MagicLinks
         .insert({
           email: '$email',
-          token: crypto.randomBytes(32).toString('base64'),
+          token: crypto.randomBytes(12).toString('hex'),
           grantId: '$grantId'
         })
         .run({email, grantId}),
@@ -53,7 +53,7 @@ exports.requestMagicLink = {
     ];
 
     //todo
-    yield mailer.send(email, pendingLink.token);
+    yield mailer.send(email, magicLink);
 
     this.render('sentEmail', {email});
   }
@@ -106,7 +106,7 @@ exports.validateMagicLink = {
 
     const [authorizationCode] = yield AuthorizationCodes
       .insert({
-        code: crypto.randomBytes(32).toString('base64'),
+        code: crypto.randomBytes(24).toString('hex'),
         clientId: '$clientId'
       })
       .run({clientId: magicLink.grant.clientId});

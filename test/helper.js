@@ -11,13 +11,21 @@ exports.createClient = function (app) {
         : Clients
         .insert({
           title: 'test app',
-          redirectUrl: 'http://localhost:4000/auth',
-          secret: crypto.randomBytes(24).toString('base64'),
+          redirectUrl: 'http://localhost:4000/authentications/callback',
+          secret: "WK5TVHSg7x51ifPQ+uyKCtzgnWz9FqmO",
           type: 'confidential'
         })
         .run()
         .then(function ([client]) {
-          return client;
-        });
+          return Clients
+            .update()
+            .set('id', 'd782d313-0811-493e-a760-066dc83bb548')
+            .where('id', client.id)
+            .run()
+            .then(function ([client]) {
+              return client;
+            })
+        })
+        .catch(e=>console.log(e));
     });
 };
