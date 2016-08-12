@@ -8,13 +8,14 @@ module.exports = function (h) {
       token: 'string',
       clientId: 'uuid',
       authorizationCodeId: 'uuid',
-      revoked:'boolean',
-      grantType:{
+      revoked: 'boolean',
+      grantType: {
         type: {
           type: 'enum',
-          values: ['authorization_code', 'client_credentials','refresh_token']
+          values: ['authorization_code', 'client_credentials', 'refresh_token']
         },
-      }
+      },
+      scope: 'jsonb'
     },
     relations: {
       client: h.belongsTo('Clients', 'clientId'),

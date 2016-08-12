@@ -17,7 +17,8 @@ test('response_type "code": render login page if everything is valid', t=> {
           app.stop();
           t.end(err);
         });
-    });
+    })
+    .catch(err=>console.log(err));
 });
 
 test('response_type "code": redirect if state is missing', t=> {

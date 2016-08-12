@@ -41,14 +41,10 @@ exports.requestMagicLink = {
       this.throw(422, 'grant is Invalid');
     }
 
-    const [[magicLink]] = yield [
+    const [magicLink] = yield [
       MagicLinks
-        .insert({
-          email: '$email',
-          token: crypto.randomBytes(12).toString('hex'),
-          grantId: '$grantId'
-        })
-        .run({email, grantId}),
+        .new({email, token: crypto.randomBytes(16).toString('hex'), grantId})
+        .create(),
       grant.save({consumed: true})
     ];
 
@@ -104,12 +100,15 @@ exports.validateMagicLink = {
       this.throw(422, 'invalid magic link');
     }
 
-    const [authorizationCode] = yield AuthorizationCodes
-      .insert({
-        code: crypto.randomBytes(24).toString('hex'),
-        clientId: '$clientId'
+    const authorizationCode = yield AuthorizationCodes
+      .new({
+        clientId: magicLink.grant.clientId,
+        code: crypto.randomBytes(24).toString('base64'),
+        magicLinkId
       })
-      .run({clientId: magicLink.grant.clientId});
+      .create();
+
+    yield magicLink.save({consumed: true});
 
     const redirect = url.parse(magicLink.grant.client.redirectUrl);
     redirect.query = {

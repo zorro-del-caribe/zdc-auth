@@ -6,10 +6,12 @@ module.exports = function (h) {
       createdAt: 'timestamp',
       updatedAt: 'timestamp',
       code: 'string',
-      clientId: 'uuid'
+      clientId: 'uuid',
+      magicLinkId: 'uuid'
     },
     relations: {
       client: h.belongsTo('Clients', 'clientId'),
+      magicLink: h.belongsTo('MagicLinks', 'magicLinkId'),
       token: h.hasOne('Tokens')
     }
   };

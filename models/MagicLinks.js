@@ -5,13 +5,14 @@ module.exports = function (h) {
       id: 'uuid',
       email: 'string',
       createdAt: 'timestamp',
-      updatedAt:'timestamp',
+      updatedAt: 'timestamp',
       token: 'string',
       grantId: 'uuid',
-      consumed:'boolean'
+      consumed: 'boolean'
     },
     relations: {
-      grant: h.belongsTo('Grants', 'grantId')
+      grant: h.belongsTo('Grants', 'grantId'),
+      code: h.hasOne('AuthorizationCodes')
     }
   }
 };

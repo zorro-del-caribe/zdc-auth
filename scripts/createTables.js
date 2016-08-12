@@ -52,6 +52,7 @@ sh.getConnection()
       "createdAt" timestamp DEFAULT current_timestamp,
       "updatedAt" timestamp DEFAULT current_timestamp,
       "clientId" uuid REFERENCES clients,
+      "magicLinkId" uuid REFERENCES magic_links,
        code varchar(255),
        consumed boolean DEFAULT false
       );
@@ -67,7 +68,8 @@ sh.getConnection()
       "authorizationCodeId" uuid REFERENCES authorization_codes,
        token varchar(128),
        "grantType" grant_type,
-       revoked boolean DEFAULT false
+       revoked boolean DEFAULT false,
+       scope jsonb
       );
       DROP TABLE IF EXISTS refresh_tokens CASCADE;
       CREATE TABLE refresh_tokens
