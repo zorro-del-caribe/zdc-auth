@@ -3,7 +3,8 @@ html
         title zdc login page
         include ./headMeta
     body
-        include ./inlineStyle
+        style
+            include ./inline.css
         main
             form(method='POST', action='/magicLinks')
                 p Send a valid email so we can provide you with a magic link to login into zdc

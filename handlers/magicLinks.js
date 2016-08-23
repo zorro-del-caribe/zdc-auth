@@ -1,8 +1,8 @@
 // request a magic link (posting a email address)
 const crypto = require('crypto');
-const mailer = require('../lib/mailer')();
 const url = require('url');
 const moment = require('moment');
+const logger = require('../lib/logger');
 
 exports.requestMagicLink = {
   method: 'post',
@@ -26,7 +26,7 @@ exports.requestMagicLink = {
   },
   handler: function * (next) {
     const {email, grantId} = this.request.body;
-    const {MagicLinks, Grants} = this.app.context;
+    const {MagicLinks, Grants, mailer} = this.app.context;
 
     const [grant] = yield Grants
       .select('id', 'createdAt', 'consumed')
@@ -48,12 +48,22 @@ exports.requestMagicLink = {
       grant.save({consumed: true})
     ];
 
-    //todo
-    yield mailer.send(email, magicLink);
-
-    this.render('sentEmail', {email});
+    try {
+      const linkObject = Object.assign({pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`}, this.app.context.conf.value('server.publicEndpoint'));
+      yield mailer.magicLink({email, link: url.format(linkObject)});
+      this.render('sentEmail', {email});
+    } catch (e) {
+      this.status = 503;
+      this.body = 'Email service is temporary unavailable';
+    }
   }
 };
+
+function createValidationLink (magicLink, conf) {
+  return url.format(Object.assign({
+    pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`
+  }, conf.value('server.publicEndpoint')));
+}
 
 //validate magic link
 exports.validateMagicLink = {
@@ -108,7 +118,12 @@ exports.validateMagicLink = {
       })
       .create();
 
-    yield magicLink.save({consumed: true});
+    try {
+      yield magicLink.save({consumed: true});
+    } catch (e) {
+      console.log(e);
+      this.throw(e);
+    }
 
     const redirect = url.parse(magicLink.grant.client.redirectUrl);
     redirect.query = {

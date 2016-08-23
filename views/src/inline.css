@@ -1,0 +1,98 @@
+:root {
+    --mainColor: #427082;
+    --secondColor: #52b49a;
+}
+
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'FiraSans', sans-serif;
+    font-size: 120%;
+    font-weight: 300;
+    color: var(--mainColor);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+p {
+    margin: 0;
+    padding: 0.6em 0;
+    text-align: center;
+}
+
+label {
+    display: flex;
+    margin: 1em 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+label > span {
+    flex-basis: 20%;
+    padding: 0.5em 0;
+}
+
+input {
+    outline: none;
+}
+
+input {
+    flex-grow: 1;
+    padding: 0.4em;
+    font-size: 1em;
+    border: 1px solid gray(85%);
+}
+
+input[type=submit] {
+    align-self: center;
+    width: 50%;
+    border: 1px solid var(--mainColor);
+    cursor: pointer;
+    background: var(--mainColor);
+    color: white;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px var(--mainColor);
+}
+
+input[type=submit]:hover {
+    background: color(var(--mainColor) lightness(+10%));
+}
+
+input:focus {
+    border: 1px solid var(--secondColor);
+    box-shadow: 0 0 8px var(--secondColor);
+}
+
+@media (max-width: 680px) {
+    body {
+        font-size: 100%;
+        position: relative;
+        align-items: flex-start;
+    }
+
+    input[type=email] {
+        flex-basis: 100%;
+    }
+
+    input[type=submit] {
+        width: 100%;
+    }
+
+    button {
+        align-self: stretch;
+    }
+
+    p {
+        text-align: justify;
+        text-align-last: center;
+    }
+}

@@ -10,6 +10,14 @@ test('request magic link', t=> {
   app.start()
     .then(helper.createClient)
     .then(function (client) {
+      app.context.mailer = {
+        magicLink({email, link}){
+          if (email === 'test@example.com' && link) {
+            return Promise.resolve(true);
+          } else
+            return Promise.reject(new Error('invalid arguments'));
+        }
+      };
       const {Grants} = app.context;
       return Grants
         .insert({state: '123', clientId: client.id})
