@@ -36,7 +36,8 @@ exports.requestMagicLink = {
     const createdAtMoment = moment(grant.createdAt);
     const diff = moment().diff(createdAtMoment, 'minutes');
 
-    if (!grant || grant.consumed === true || diff >= 15) {
+    //todo check the time
+    if (!grant || grant.consumed === true /*|| diff >= 15*/) {
       yield grant.save({consumed: true});
       this.throw(422, 'grant is Invalid');
     }

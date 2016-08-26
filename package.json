@@ -36,7 +36,8 @@
     "superagent": "^2.1.0",
     "bucanero": "https://github.com/zorro-del-caribe/bucanero.git",
     "bucanero-router": "https://github.com/zorro-del-caribe/bucanero-router.git",
-    "bucanero-tanker": "https://github.com/zorro-del-caribe/bucanero-tanker.git"
+    "bucanero-tanker": "https://github.com/zorro-del-caribe/bucanero-tanker.git",
+    "zdc":"https://github.com/zorro-del-caribe/zdc-sdk.git"
   },
   "devDependencies": {
     "node-uuid": "^1.4.7",

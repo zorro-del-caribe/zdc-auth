@@ -1,3 +1,4 @@
+const debug = require('debug')('zdc-auth');
 module.exports = function (options = {}) {
   const {logger} = Object.assign({}, {logger: console}, options);
   return function * (next) {
@@ -5,6 +6,7 @@ module.exports = function (options = {}) {
     try {
       yield next;
     } catch (e) {
+      debug(e);
       const status = e.status || 500;
       this.status = status;
       if (status === 500) {

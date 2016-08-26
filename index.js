@@ -1,3 +1,8 @@
 const app = require('./app')();
 
-app.start();
+app
+  .start()
+  .catch(err=> {
+    console.log(err);
+    process.exit(1);
+  });

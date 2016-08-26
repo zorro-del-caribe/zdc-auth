@@ -76,7 +76,6 @@ exports.get = {
       revoked: token.revoked,
       token: token.token,
       expires_in: Math.max(expires_in, 0)
-    }
-
+    };
   }]
 };
