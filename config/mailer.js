@@ -1,8 +1,8 @@
 exports.default = {
   endpoint: {
     protocol: 'http',
-    hostname: 'localhost',
-    port: 5001
+    hostname: process.env.MAILER_HOST || 'mailer',
+    port: process.env.MAILER_PORT || 5001
   },
   token: 'whatever'
 };

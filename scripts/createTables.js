@@ -81,6 +81,7 @@ sh.getConnection()
        token varchar(128),
        revoked boolean DEFAULT false
       );
+      INSERT INTO clients (id, secret, type, "redirectUrl",title) VALUES ('d782d313-0811-493e-a760-066dc83bb548','WK5TVHSg7x51ifPQ+uyKCtzgnWz9FqmO','confidential','http://app.zdc.local/authentications/callback','test app');
 `, function (err, result) {
       if (err)
         throw err;

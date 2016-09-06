@@ -50,8 +50,8 @@ exports.requestMagicLink = {
     ];
 
     try {
-      const linkObject = Object.assign({pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`}, this.app.context.conf.value('server.publicEndpoint'));
-      yield mailer.magicLink({email, link: url.format(linkObject)});
+      const linkObject = Object.assign({pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`}, this.app.context.conf.value('server.fqdn'));
+      mailer.magicLink({email, link: url.format(linkObject)});
       this.render('sentEmail', {email});
     } catch (e) {
       this.status = 503;
@@ -63,7 +63,7 @@ exports.requestMagicLink = {
 function createValidationLink (magicLink, conf) {
   return url.format(Object.assign({
     pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`
-  }, conf.value('server.publicEndpoint')));
+  }, conf.value('server.fqdn')));
 }
 
 //validate magic link
