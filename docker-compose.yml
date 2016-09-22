@@ -1,0 +1,12 @@
+version: '2'
+services:
+  auth:
+    image: zdc-auth:latest
+    volumes:
+      - '/Users/Laurent/Documents/code/zdc/zdc-auth:/app'
+    environment:
+      - 'VIRTUAL_HOST=http://auth.zdc.local, https://auth.zdc.local'
+  db:
+    image: postgres:latest
+    ports:
+      - '5432:5432'

@@ -3,11 +3,16 @@ const auth = require('basic-auth');
 module.exports = function () {
   return function* (next) {
     const {Clients} = this.app.context;
+    const authVals = auth(this);
+
+    if (!authVals) {
+      challenge(this);
+    }
+
     const {name:clientId, pass:secret} = auth(this);
 
     if (!clientId) {
-      this.set('WWW-Authenticate', 'Basic');
-      this.throw(401)
+      challenge(this);
     }
 
     const [client] = yield Clients
@@ -23,3 +28,8 @@ module.exports = function () {
     yield *next;
   };
 };
+
+function challenge (koaCtx) {
+  koaCtx.set('WWW-Authenticate', 'Basic');
+  koaCtx.throw(401)
+}
