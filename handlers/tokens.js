@@ -59,9 +59,10 @@ exports.get = {
 
     this.assert(token, 404, 'could not find the requested token');
 
-    if (token.clientId !== this.state.client.id) {
-      this.throw(403, 'this client can not access this token');
-    }
+    //todo
+    // if (token.clientId !== this.state.client.id) {
+    //   this.throw(403, 'this client can not access this token');
+    // }
 
     const createdAtMoment = moment(token.createdAt);
     const diff = moment().diff(createdAtMoment, 'seconds');

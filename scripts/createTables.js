@@ -82,7 +82,10 @@ sh.getConnection()
        token varchar(128),
        revoked boolean DEFAULT false
       );
-      INSERT INTO clients (id, secret, type, "redirectUrl",title) VALUES ('d782d313-0811-493e-a760-066dc83bb548','WK5TVHSg7x51ifPQ+uyKCtzgnWz9FqmO','confidential','http://app.zdc.local/authentications/callback','test app');
+      INSERT INTO clients (id, secret, type, "redirectUrl",title) VALUES ('af19c093-3ac6-4a10-83fb-bb96d0906d27','88501fa7bd1b73eff81deeef028aeb9d','confidential','http://localhost:4000/authentications/callback','test app');
+      INSERT INTO clients (id, secret, type, "redirectUrl",title) VALUES ('d782d313-0811-493e-a760-066dc83bb548','WK5TVHSg7x51ifPQ+uyKCtzgnWz9FqmO','confidential','https://app.zdc.local/authentications/callback','zdc web app');
+      INSERT INTO clients (id, secret, type,title) VALUES ('209b18b1-1f44-42e5-9c71-636e596e5d13','0c33f9c8f05362d5e1791ab9c3870fb5','confidential','zdc api');
+      INSERT INTO clients (id, secret, type,title) VALUES ('9c9194bb-4812-49a3-a08b-a78c394ddc86','8c9b8d513f04a934b8234f039c3d538b','confidential','zdc search');
 `, function (err, result) {
       if (err)
         throw err;

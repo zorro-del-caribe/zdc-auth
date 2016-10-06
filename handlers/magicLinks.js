@@ -51,8 +51,8 @@ exports.requestMagicLink = {
 
     try {
       const mailLink = createValidationLink(magicLink, conf);
-      mailer.magicLink({email, link: mailLink});
-      this.render('sentEmail', {email});
+      mailer.magicLink({email, mailLink});
+      this.render('sentEmail', {email, mailLink});
     } catch (e) {
       this.status = 503;
       this.body = 'Email service is temporary unavailable';
@@ -62,7 +62,10 @@ exports.requestMagicLink = {
 
 function createValidationLink (magicLink, conf) {
   return url.format(Object.assign({
-    pathname: `/magicLinks/${magicLink.id}?token=${magicLink.token}`
+    pathname: `/magicLinks/${magicLink.id}`,
+    query: {
+      token: magicLink.token
+    }
   }, conf.value('server.fqdn')));
 }
 
