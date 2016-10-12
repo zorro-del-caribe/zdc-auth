@@ -26,7 +26,7 @@ exports.requestMagicLink = {
   },
   handler: function * (next) {
     const {email, grantId} = this.request.body;
-    const {MagicLinks, Grants, mailer, conf} = this.app.context;
+    const {MagicLinks, Grants, jobs, conf} = this.app.context;
 
     const [grant] = yield Grants
       .select('id', 'createdAt', 'consumed')
@@ -51,7 +51,7 @@ exports.requestMagicLink = {
 
     try {
       const mailLink = createValidationLink(magicLink, conf);
-      mailer.magicLink({email, mailLink});
+      yield jobs().sendEmail({template: 'magicLink', recipient: email, payload: {mailLink: mailLink}});
       this.render('sentEmail', {email, mailLink});
     } catch (e) {
       this.status = 503;

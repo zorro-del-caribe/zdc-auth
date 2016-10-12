@@ -7,7 +7,6 @@ const conf = require('conf-load')();
 
 const sh = shipHold(conf.value('db'));
 
-
 sh.getConnection()
   .then(function ({client, done}) {
     client.query(`

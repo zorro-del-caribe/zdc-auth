@@ -10,12 +10,17 @@ test('request magic link', t=> {
   app.start()
     .then(helper.createClient)
     .then(function (client) {
-      app.context.mailer = {
-        magicLink({email, link}){
-          if (email === 'test@example.com' && link) {
-            return Promise.resolve(true);
-          } else
-            return Promise.reject(new Error('invalid arguments'));
+
+      app.context.jobs = function () {
+        return {
+          sendEmail(options){
+            const {template, recipient, payload} = options;
+            if (template === 'magicLink' && recipient === 'test@example.com' && payload.mailLink) {
+              return Promise.resolve();
+            } else {
+              return Promise.reject('unexpected argument');
+            }
+          }
         }
       };
       const {Grants} = app.context;
